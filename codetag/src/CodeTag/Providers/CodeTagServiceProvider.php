@@ -1,11 +1,11 @@
 <?php
 
-namespace CodePress\CodeTags\Providers;
+namespace CodePress\CodeTag\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
 
-class CodeTagsServiceProvider extends ServiceProvider
+class CodeTagServiceProvider extends ServiceProvider
 {
 
     public function boot()

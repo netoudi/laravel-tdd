@@ -1,6 +1,6 @@
 <?php
 
-namespace CodePress\CodeTags\Models;
+namespace CodePress\CodeTag\Models;
 
 
 use Illuminate\Database\Eloquent\Model;

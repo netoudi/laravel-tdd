@@ -1,5 +1,5 @@
 {
-  "name": "codepress/code-tags",
+  "name": "codepress/code-tag",
   "require": {
     "php": ">=5.5.9",
     "illuminate/contracts": "~5.2",
@@ -13,7 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "CodePress\\CodeTags\\": "src/CodeTags/"
+      "CodePress\\CodeTag\\": "src/CodeTag/"
     }
   }
 }
