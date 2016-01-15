@@ -11,6 +11,8 @@ class CodeCategoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([__DIR__ . '/../../resources/migrations/' => base_path('databases/migrations')], 'migrations');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views/codecategory/', 'codecategory');
+        require __DIR__ . '/../routes.php';
     }
 
     /**
