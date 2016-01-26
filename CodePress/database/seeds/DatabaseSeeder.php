@@ -1,5 +1,7 @@
 <?php
 
+use CodePress\CodeCategory\Models\Category;
+use CodePress\CodeTag\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,5 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserTableSeeder::class);
+
+        factory(Category::class, 5)->create();
+
+        factory(Tag::class, 5)->create();
     }
 }
