@@ -2,32 +2,37 @@
 
 namespace CodePress\CodeCategory\Controllers;
 
-use CodePress\CodeCategory\Models\Category;
+use CodePress\CodeCategory\Repository\CategoryRepository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 
 class AdminCategoriesController extends Controller
 {
-    private $category;
-
+    /**
+     * @var ResponseFactory
+     */
     private $responseFactory;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
-    public function __construct(ResponseFactory $responseFactory, Category $category)
+    public function __construct(ResponseFactory $responseFactory, CategoryRepository $categoryRepository)
     {
-        $this->category = $category;
         $this->responseFactory = $responseFactory;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index()
     {
-        $categories = $this->category->all();
+        $categories = $this->categoryRepository->all();
 
         return $this->responseFactory->view('codecategory::index', compact('categories'));
     }
 
     public function create()
     {
-        $categories = $this->category->lists('name', 'id');
+        $categories = $this->categoryRepository->lists('name', 'id');
         $categories->prepend('- None -', '');
 
         return view('codecategory::form', compact('categories'));
@@ -39,17 +44,17 @@ class AdminCategoriesController extends Controller
         $data['active'] = isset($data['active']) && $data['active'] == 'on' ? true : false;
         $data['parent_id'] = !empty($data['parent_id']) ? $data['parent_id'] : null;
 
-        $this->category->create($data);
+        $this->categoryRepository->create($data);
 
         return redirect()->route('admin.categories.index');
     }
 
     public function edit($id)
     {
-        $categories = $this->category->lists('name', 'id');
+        $categories = $this->categoryRepository->lists('name', 'id');
         $categories->prepend('- None -', '');
 
-        $category = $this->category->find($id);
+        $category = $this->categoryRepository->find($id);
 
         return view('codecategory::form', compact('category', 'categories'));
     }
@@ -60,14 +65,14 @@ class AdminCategoriesController extends Controller
         $data['active'] = isset($data['active']) && $data['active'] == 'on' ? true : false;
         $data['parent_id'] = !empty($data['parent_id']) ? $data['parent_id'] : null;
 
-        $this->category->find($id)->update($data);
+        $this->categoryRepository->update($data, $id);
 
         return redirect()->route('admin.categories.index');
     }
 
     public function destroy($id)
     {
-        $this->category->find($id)->delete();
+        $this->categoryRepository->delete($id);
 
         return redirect()->route('admin.categories.index');
     }
