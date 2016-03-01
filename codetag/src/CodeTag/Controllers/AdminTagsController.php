@@ -2,25 +2,30 @@
 
 namespace CodePress\CodeTag\Controllers;
 
-use CodePress\CodeTag\Models\Tag;
+use CodePress\CodeTag\Repository\TagRepository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 
 class AdminTagsController extends Controller
 {
-    private $tag;
-
+    /**
+     * @var ResponseFactory
+     */
     private $responseFactory;
+    /**
+     * @var TagRepository
+     */
+    private $tagRepository;
 
-    public function __construct(ResponseFactory $responseFactory, Tag $tag)
+    public function __construct(ResponseFactory $responseFactory, TagRepository $tagRepository)
     {
-        $this->tag = $tag;
         $this->responseFactory = $responseFactory;
+        $this->tagRepository = $tagRepository;
     }
 
     public function index()
     {
-        $tags = $this->tag->all();
+        $tags = $this->tagRepository->all();
 
         return $this->responseFactory->view('codetag::index', compact('tags'));
     }
@@ -32,28 +37,28 @@ class AdminTagsController extends Controller
 
     public function store(Request $request)
     {
-        $this->tag->create($request->all());
+        $this->tagRepository->create($request->all());
 
         return redirect()->route('admin.tags.index');
     }
 
     public function edit($id)
     {
-        $tag = $this->tag->find($id);
+        $tag = $this->tagRepository->find($id);
 
         return view('codetag::form', compact('tag'));
     }
 
     public function update(Request $request, $id)
     {
-        $this->tag->find($id)->update($request->all());
+        $this->tagRepository->update($request->all(), $id);
 
         return redirect()->route('admin.tags.index');
     }
 
     public function destroy($id)
     {
-        $this->tag->find($id)->delete();
+        $this->tagRepository->delete($id);
 
         return redirect()->route('admin.tags.index');
     }
