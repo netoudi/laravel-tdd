@@ -4,11 +4,26 @@ namespace CodePress\CodeDatabase\Tests;
 
 use CodePress\CodeDatabase\AbstractRepository;
 use CodePress\CodeDatabase\Contracts\RepositoryInterface;
+use CodePress\CodeDatabase\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Mockery as m;
 
 class AbstractRepositoryTest extends AbstractTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->migrate();
+
+        Category::create([
+            'name' => 'name',
+            'description' => 'description'
+        ]);
+
+        echo Category::all()->first()->name;
+    }
+
     public function test_if_implements_repository_interface()
     {
         $mock = m::mock(AbstractRepository::class);
