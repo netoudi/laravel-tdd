@@ -61,6 +61,22 @@ class CategoryRepositoryTest extends AbstractTestCase
         $this->assertNull($result[0]->description);
     }
 
+    public function test_can_create_category()
+    {
+        $result = $this->repository->create([
+            'name' => 'Category 4',
+            'description' => 'Description 4'
+        ]);
+
+        $this->assertInstanceOf(Category::class, $result);
+        $this->assertEquals('Category 4', $result->name);
+        $this->assertEquals('Description 4', $result->description);
+
+        $result = Category::find(4);
+        $this->assertEquals('Category 4', $result->name);
+        $this->assertEquals('Description 4', $result->description);
+    }
+
     private function createCategory()
     {
         Category::create([
