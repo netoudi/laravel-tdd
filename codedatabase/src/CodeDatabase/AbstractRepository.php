@@ -52,4 +52,9 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         return $this->model->findOrFail($id, $columns);
     }
+
+    public function findBy($field, $value, $columns = array('*'))
+    {
+        return $this->model->where($field, '=', $value)->get($columns);
+    }
 }

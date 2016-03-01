@@ -141,6 +141,22 @@ class CategoryRepositoryTest extends AbstractTestCase
         $this->repository->find(10);
     }
 
+    public function test_can_findby_categories()
+    {
+        $result = $this->repository->findBy('name', 'Category 1');
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Category::class, $result[0]);
+        $this->assertEquals('Category 1', $result[0]->name);
+
+        $result = $this->repository->findBy('name', 'Category 10');
+        $this->assertCount(0, $result);
+
+        $result = $this->repository->findBy('name', 'Category 1', ['name']);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Category::class, $result[0]);
+        $this->assertNull($result[0]->description);
+    }
+
     private function createCategory()
     {
         Category::create([
