@@ -10,6 +10,9 @@ use Mockery as m;
 
 class CategoryRepositoryTest extends AbstractTestCase
 {
+    /**
+     * @var CategoryRepository
+     */
     private $repository;
 
     public function setUp()
@@ -46,6 +49,16 @@ class CategoryRepositoryTest extends AbstractTestCase
 
         $result = $reflectionProperty->getValue($this->repository);
         $this->assertInstanceOf(Category::class, $result);
+    }
+
+    public function test_can_list_all_categories()
+    {
+        $result = $this->repository->all();
+        $this->assertCount(3, $result);
+        $this->assertNotNull($result[0]->description);
+
+        $result = $this->repository->all(['name']);
+        $this->assertNull($result[0]->description);
     }
 
     private function createCategory()

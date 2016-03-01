@@ -7,10 +7,6 @@ use CodePress\CodeDatabase\Models\Category;
 
 class CategoryRepository extends AbstractRepository
 {
-    public function all($columns = array('*'))
-    {
-    }
-
     public function create(array $data)
     {
     }
