@@ -57,4 +57,9 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         return $this->model->where($field, '=', $value)->get($columns);
     }
+
+    public function lists($columns = '*')
+    {
+        return $this->model->lists($columns);
+    }
 }
