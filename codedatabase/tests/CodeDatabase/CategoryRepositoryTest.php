@@ -120,6 +120,27 @@ class CategoryRepositoryTest extends AbstractTestCase
         $this->repository->delete(10);
     }
 
+    public function test_can_find_category()
+    {
+        $result = $this->repository->find(1);
+        $this->assertInstanceOf(Category::class, $result);
+    }
+
+    public function test_can_find_category_with_columns()
+    {
+        $result = $this->repository->find(1, ['name']);
+        $this->assertInstanceOf(Category::class, $result);
+        $this->assertNull($result->description);
+    }
+
+    /**
+     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function test_can_find_category_fail()
+    {
+        $this->repository->find(10);
+    }
+
     private function createCategory()
     {
         Category::create([
