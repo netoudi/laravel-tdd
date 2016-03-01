@@ -77,6 +77,33 @@ class CategoryRepositoryTest extends AbstractTestCase
         $this->assertEquals('Description 4', $result->description);
     }
 
+    public function test_can_update_category()
+    {
+        $result = $this->repository->update([
+            'name' => 'Category Update',
+            'description' => 'Description Update'
+        ], 1);
+
+        $this->assertInstanceOf(Category::class, $result);
+        $this->assertEquals('Category Update', $result->name);
+        $this->assertEquals('Description Update', $result->description);
+
+        $result = Category::find(1);
+        $this->assertEquals('Category Update', $result->name);
+        $this->assertEquals('Description Update', $result->description);
+    }
+
+    /**
+     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function test_can_update_category_fail()
+    {
+        $this->repository->update([
+            'name' => 'Category Update',
+            'description' => 'Description Update'
+        ], 10);
+    }
+
     private function createCategory()
     {
         Category::create([
