@@ -7,9 +7,24 @@ use CodePress\CodeDatabase\Contracts\RepositoryInterface;
 
 class FindByNameAndDescription implements CriteriaInterface
 {
+    /**
+     * @var
+     */
+    private $name;
+    /**
+     * @var
+     */
+    private $description;
+
+    public function __construct($name, $description)
+    {
+        $this->name = $name;
+        $this->description = $description;
+    }
 
     public function apply($model, RepositoryInterface $repositoryInterface)
     {
-        // TODO: Implement apply() method.
+        return $model->where('name', $this->name)
+            ->where('description', $this->description);
     }
 }

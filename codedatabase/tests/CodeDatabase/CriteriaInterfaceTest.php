@@ -5,7 +5,7 @@ namespace CodePress\CodeDatabase\Tests;
 use CodePress\CodeDatabase\Contracts\CriteriaInterface;
 use CodePress\CodeDatabase\Contracts\RepositoryInterface;
 use CodePress\CodeDatabase\Models\Category;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Mockery as m;
 
 class CriteriaInterfaceTest extends AbstractTestCase
