@@ -5,10 +5,13 @@ namespace CodePress\CodeDatabase\Tests;
 use CodePress\CodeDatabase\Contracts\CriteriaCollectionInterface;
 use CodePress\CodeDatabase\Contracts\CriteriaInterface;
 use CodePress\CodeDatabase\Criteria\FindByDescription;
+use CodePress\CodeDatabase\Criteria\FindByName;
 use CodePress\CodeDatabase\Criteria\FindByNameAndDescription;
+use CodePress\CodeDatabase\Criteria\OrderDescById;
 use CodePress\CodeDatabase\Criteria\OrderDescByName;
 use CodePress\CodeDatabase\Models\Category;
 use CodePress\CodeDatabase\Repository\CategoryRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Mockery as m;
 
 class CategoryRepositoryCriteriaTest extends AbstractTestCase
@@ -61,15 +64,7 @@ class CategoryRepositoryCriteriaTest extends AbstractTestCase
 
     public function test_apply_criteria()
     {
-        Category::create([
-            'name' => 'Category One',
-            'description' => 'Description'
-        ]);
-
-        Category::create([
-            'name' => 'Category Two',
-            'description' => 'Description'
-        ]);
+        $this->createCategoryDescription();
 
         $criteria1 = new FindByDescription('Description');
         $criteria2 = new OrderDescByName();
@@ -79,9 +74,90 @@ class CategoryRepositoryCriteriaTest extends AbstractTestCase
         $this->assertInstanceOf(CategoryRepository::class, $repository);
 
         $result = $repository->all();
-        $this->assertCount(2, $result);
+        $this->assertCount(3, $result);
         $this->assertEquals($result[0]->name, 'Category Two');
-        $this->assertEquals($result[1]->name, 'Category One');
+        $this->assertEquals($result[1]->name, 'Category Two');
+        $this->assertEquals($result[2]->name, 'Category One');
+    }
+
+    public function test_can_list_all_categories_with_criteria()
+    {
+        $this->createCategoryDescription();
+
+        $criteria1 = new FindByDescription('Description');
+        $criteria2 = new OrderDescByName();
+
+        $this->repository->addCriteria($criteria1)->addCriteria($criteria2);
+
+        $result = $this->repository->all();
+        $this->assertCount(3, $result);
+        $this->assertEquals($result[0]->name, 'Category Two');
+        $this->assertEquals($result[1]->name, 'Category Two');
+        $this->assertEquals($result[2]->name, 'Category One');
+    }
+
+    /**
+     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function test_can_find_category_with_criteria_and_exception()
+    {
+        $this->createCategoryDescription();
+
+        $criteria1 = new FindByDescription('Description');
+        $criteria2 = new FindByName('Category Two');
+
+        $this->repository->addCriteria($criteria1)->addCriteria($criteria2);
+
+        $result = $this->repository->find(5);
+        $this->assertEquals($result->name, 'Category Two');
+    }
+
+    public function test_can_find_category_with_criteria()
+    {
+        $this->createCategoryDescription();
+
+        $criteria1 = new FindByDescription('Description');
+        $criteria2 = new FindByName('Category One');
+
+        $this->repository->addCriteria($criteria1)->addCriteria($criteria2);
+
+        $result = $this->repository->find(5);
+        $this->assertEquals($result->name, 'Category One');
+    }
+
+    public function test_can_find_by_categories_with_criteria()
+    {
+        $this->createCategoryDescription();
+
+        $criteria1 = new FindByName('Category Two');
+        $criteria2 = new OrderDescById();
+
+        $this->repository->addCriteria($criteria1)->addCriteria($criteria2);
+
+        $result = $this->repository->findBy('description', 'Description');
+        $this->assertCount(2, $result);
+        $this->assertEquals($result[0]->id, 6);
+        $this->assertEquals($result[0]->name, 'Category Two');
+        $this->assertEquals($result[1]->id, 4);
+        $this->assertEquals($result[1]->name, 'Category Two');
+    }
+
+    private function createCategoryDescription()
+    {
+        Category::create([
+            'name' => 'Category Two',
+            'description' => 'Description'
+        ]);
+
+        Category::create([
+            'name' => 'Category One',
+            'description' => 'Description'
+        ]);
+
+        Category::create([
+            'name' => 'Category Two',
+            'description' => 'Description'
+        ]);
     }
 
     private function createCategory()
@@ -90,10 +166,12 @@ class CategoryRepositoryCriteriaTest extends AbstractTestCase
             'name' => 'Category 1',
             'description' => 'Description 1'
         ]);
+
         Category::create([
             'name' => 'Category 2',
             'description' => 'Description 2'
         ]);
+
         Category::create([
             'name' => 'Category 3',
             'description' => 'Description 3'

@@ -28,6 +28,7 @@ abstract class AbstractRepository implements RepositoryInterface, CriteriaCollec
 
     public function all($columns = array('*'))
     {
+        $this->applyCriteria();
         return $this->model->get($columns);
     }
 
@@ -51,11 +52,13 @@ abstract class AbstractRepository implements RepositoryInterface, CriteriaCollec
 
     public function find($id, $columns = array('*'))
     {
+        $this->applyCriteria();
         return $this->model->findOrFail($id, $columns);
     }
 
     public function findBy($field, $value, $columns = array('*'))
     {
+        $this->applyCriteria();
         return $this->model->where($field, '=', $value)->get($columns);
     }
 
