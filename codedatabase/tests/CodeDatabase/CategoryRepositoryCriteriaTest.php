@@ -4,7 +4,9 @@ namespace CodePress\CodeDatabase\Tests;
 
 use CodePress\CodeDatabase\Contracts\CriteriaCollectionInterface;
 use CodePress\CodeDatabase\Contracts\CriteriaInterface;
+use CodePress\CodeDatabase\Criteria\FindByDescription;
 use CodePress\CodeDatabase\Criteria\FindByNameAndDescription;
+use CodePress\CodeDatabase\Criteria\OrderDescByName;
 use CodePress\CodeDatabase\Models\Category;
 use CodePress\CodeDatabase\Repository\CategoryRepository;
 use Mockery as m;
@@ -55,6 +57,31 @@ class CategoryRepositoryCriteriaTest extends AbstractTestCase
         $result = $result->first();
         $this->assertEquals($result->name, 'Category 1');
         $this->assertEquals($result->description, 'Description 1');
+    }
+
+    public function test_apply_criteria()
+    {
+        Category::create([
+            'name' => 'Category One',
+            'description' => 'Description'
+        ]);
+
+        Category::create([
+            'name' => 'Category Two',
+            'description' => 'Description'
+        ]);
+
+        $criteria1 = new FindByDescription('Description');
+        $criteria2 = new OrderDescByName();
+
+        $this->repository->addCriteria($criteria1)->addCriteria($criteria2);
+        $repository = $this->repository->applyCriteria();
+        $this->assertInstanceOf(CategoryRepository::class, $repository);
+
+        $result = $repository->all();
+        $this->assertCount(2, $result);
+        $this->assertEquals($result[0]->name, 'Category Two');
+        $this->assertEquals($result[1]->name, 'Category One');
     }
 
     private function createCategory()
