@@ -3,8 +3,10 @@
 namespace CodePress\CodeDatabase;
 
 use CodePress\CodeDatabase\Contracts\RepositoryInterface;
+use CodePress\CodeDatabase\Contracts\CriteriaCollectionInterface;
+use CodePress\CodeDatabase\Contracts\CriteriaInterface;
 
-abstract class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository implements RepositoryInterface, CriteriaCollectionInterface
 {
     /**
     *@var \Illuminate\Database\Eloquent\Model
@@ -61,5 +63,21 @@ abstract class AbstractRepository implements RepositoryInterface
     public function lists($columns = '*')
     {
         return $this->model->lists($columns);
+    }
+
+    public function addCriteria(CriteriaInterface $criteriaInterface)
+    {
+    }
+
+    public function getCriteriaCollection()
+    {
+    }
+
+    public function getByCriteria(CriteriaInterface $criteriaInterface)
+    {
+    }
+
+    public function applyCriteria()
+    {
     }
 }
