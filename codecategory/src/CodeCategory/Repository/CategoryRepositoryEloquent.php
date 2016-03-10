@@ -5,7 +5,7 @@ namespace CodePress\CodeCategory\Repository;
 use CodePress\CodeCategory\Models\Category;
 use CodePress\CodeDatabase\AbstractRepository;
 
-class CategoryRepository extends AbstractRepository
+class CategoryRepositoryEloquent extends AbstractRepository implements CategoryRepositoryInterface
 {
     public function model()
     {
