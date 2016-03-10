@@ -4,7 +4,7 @@ namespace CodePress\CodeTag\Tests\Controllers;
 
 use CodePress\CodeTag\Controllers\AdminTagsController;
 use CodePress\CodeTag\Controllers\Controller;
-use CodePress\CodeTag\Repository\TagRepository;
+use CodePress\CodeTag\Repository\TagRepositoryEloquent;
 use CodePress\CodeTag\Tests\AbstractTestCase;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Mockery as m;
@@ -14,7 +14,7 @@ class AdminTagsControllerTest extends AbstractTestCase
 {
     public function test_should_extend_from_controller()
     {
-        $tagRepository = m::mock(TagRepository::class);
+        $tagRepository = m::mock(TagRepositoryEloquent::class);
         $responseFactory = m::mock(ResponseFactory::class);
         $controller = new AdminTagsController($responseFactory, $tagRepository);
 
@@ -23,7 +23,7 @@ class AdminTagsControllerTest extends AbstractTestCase
 
     public function test_controller_should_runt_index_method_and_return_correct_arguments()
     {
-        $tagRepository = m::mock(TagRepository::class);
+        $tagRepository = m::mock(TagRepositoryEloquent::class);
         $responseFactory = m::mock(ResponseFactory::class);
         $controller = new AdminTagsController($responseFactory, $tagRepository);
         $html = m::mock();

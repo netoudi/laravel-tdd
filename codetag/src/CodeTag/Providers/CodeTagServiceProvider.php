@@ -3,6 +3,8 @@
 namespace CodePress\CodeTag\Providers;
 
 
+use CodePress\CodeTag\Repository\TagRepositoryEloquent;
+use CodePress\CodeTag\Repository\TagRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class CodeTagServiceProvider extends ServiceProvider
@@ -22,7 +24,7 @@ class CodeTagServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // TODO: Implement register() method.
+        $this->app->bind(TagRepositoryInterface::class, TagRepositoryEloquent::class);
     }
 
 }
