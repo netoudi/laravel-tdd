@@ -1,0 +1,12 @@
+<?php
+
+Route::group(['prefix' => 'admin/posts', 'as' => 'admin.posts.', 'namespace' => 'CodePress\CodePost\Controllers', 'middleware' => ['web']], function () {
+
+    Route::get('/', ['uses' => 'AdminPostsController@index', 'as' => 'index']);
+    Route::get('/create', ['uses' => 'AdminPostsController@create', 'as' => 'create']);
+    Route::post('/store', ['uses' => 'AdminPostsController@store', 'as' => 'store']);
+    Route::get('/edit/{id}', ['uses' => 'AdminPostsController@edit', 'as' => 'edit']);
+    Route::post('/update/{id}', ['uses' => 'AdminPostsController@update', 'as' => 'update']);
+    Route::get('/destroy/{id}', ['uses' => 'AdminPostsController@destroy', 'as' => 'destroy']);
+
+});
