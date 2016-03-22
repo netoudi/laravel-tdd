@@ -28,11 +28,11 @@ class AdminPostsControllerTest extends AbstractTestCase
         $controller = new AdminPostsController($responseFactory, $postRepository);
         $html = m::mock();
 
-        $categoriesResult = ['cat1', 'cat2'];
-        $postRepository->shouldReceive('all')->andReturn($categoriesResult);
+        $postsResult = ['cat1', 'cat2'];
+        $postRepository->shouldReceive('all')->andReturn($postsResult);
 
         $responseFactory->shouldReceive('view')
-            ->with('codecategory::index', ['categories' => $categoriesResult])
+            ->with('codepost::index', ['posts' => $postsResult])
             ->andReturn($html);
 
         $this->assertEquals($controller->index(), $html);

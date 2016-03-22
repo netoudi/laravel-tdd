@@ -15,24 +15,24 @@ class AdminPostsController extends Controller
     /**
      * @var PostRepositoryInterface
      */
-    private $categoryRepository;
+    private $postRepository;
 
-    public function __construct(ResponseFactory $responseFactory, PostRepositoryInterface $categoryRepository)
+    public function __construct(ResponseFactory $responseFactory, PostRepositoryInterface $postRepository)
     {
         $this->responseFactory = $responseFactory;
-        $this->categoryRepository = $categoryRepository;
+        $this->postRepository = $postRepository;
     }
 
     public function index()
     {
-        $categories = $this->categoryRepository->all();
+        $posts = $this->postRepository->all();
 
-        return $this->responseFactory->view('codecategory::index', compact('categories'));
+        return $this->responseFactory->view('codepost::index', compact('posts'));
     }
 
     public function create()
     {
-        return view('codepost::form', compact('posts'));
+        return view('codepost::form');
     }
 
     public function store(Request $request)
