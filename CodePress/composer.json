@@ -24,6 +24,7 @@
         "psr-4": {
             "App\\": "app/",
             "CodePress\\CodeDatabase\\": "packages/codedatabase/src/CodeDatabase/",
+            "CodePress\\CodePost\\": "packages/codepost/src/CodePost/",
             "CodePress\\CodeCategory\\": "packages/codecategory/src/CodeCategory/",
             "CodePress\\CodeTag\\": "packages/codetag/src/CodeTag/"
         }
