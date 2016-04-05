@@ -3,26 +3,14 @@
 namespace CodePress\CodePost\Models;
 
 
-use Cviebrock\EloquentSluggable\SluggableInterface;
-use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Validator;
 
-class Post extends Model implements SluggableInterface
+class Comment extends Model
 {
-    use SluggableTrait;
-
-    protected $table = "codepress_posts";
-
-    protected $sluggable = [
-        'build_from' => 'title',
-        'save_to' => 'slug',
-        'unique' => true
-    ];
+    protected $table = "codepress_comments";
 
     protected $fillable = [
-        'title',
-        'slug',
         'content'
     ];
 
@@ -55,19 +43,9 @@ class Post extends Model implements SluggableInterface
         return true;
     }
 
-    public function categories()
+    public function post()
     {
-        return $this->morphToMany('\CodePress\CodeCategory\Models\Category', 'categorizable', 'codepress_categorizables');
-    }
-
-    public function tags()
-    {
-        return $this->morphToMany('\CodePress\CodeTag\Models\Tag', 'taggable', 'codepress_taggables');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Post::class);
     }
 
 }
