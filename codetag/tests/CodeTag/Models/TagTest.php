@@ -3,6 +3,7 @@
 namespace CodePress\CodeTag\Tests\Models;
 
 
+use CodePress\CodePost\Models\Post;
 use CodePress\CodeTag\Models\Tag;
 use CodePress\CodeTag\Tests\AbstractTestCase;
 use Illuminate\Validation\Validator;
@@ -67,6 +68,42 @@ class TagTest extends AbstractTestCase
 
         $tag = Tag::all()->first();
         $this->assertEquals('Tag Test', $tag->name);
+    }
+
+    public function test_can_add_tags_to_posts()
+    {
+        $post = Post::create(['title' => 'My Post', 'content' => 'My content', 'slug' => 'my-post']);
+        $tag1 = Tag::create(['name' => 'Tag 1']);
+        $tag2 = Tag::create(['name' => 'Tag 2']);
+
+        $tag1->posts()->save($post);
+        $tag2->posts()->save($post);
+
+        $this->assertCount(1, Post::all());
+        $this->assertEquals('My Post', $tag1->posts->first()->title);
+        $this->assertEquals('My Post', $tag2->posts->first()->title);
+        $tags = Post::find(1)->tags;
+        $this->assertCount(2, $tags);
+        $this->assertEquals('Tag 1', $tags[0]->name);
+        $this->assertEquals('Tag 2', $tags[1]->name);
+    }
+
+    public function test_can_add_posts_to_tags()
+    {
+        $tag = Tag::create(['name' => 'Tag Test']);
+        $post1 = Post::create(['title' => 'My post 1', 'content' => 'My content 1', 'slug' => 'my-post-1']);
+        $post2 = Post::create(['title' => 'My post 2', 'content' => 'My content 2', 'slug' => 'my-post-2']);
+
+        $post1->tags()->save($tag);
+        $post2->tags()->save($tag);
+
+        $this->assertCount(1, Tag::all());
+        $this->assertEquals('Tag Test', $post1->tags->first()->name);
+        $this->assertEquals('Tag Test', $post2->tags->first()->name);
+        $posts = Tag::find(1)->posts;
+        $this->assertCount(2, $posts);
+        $this->assertEquals('My post 1', $posts[0]->title);
+        $this->assertEquals('My post 2', $posts[1]->title);
     }
 
 }

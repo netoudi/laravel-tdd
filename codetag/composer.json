@@ -6,7 +6,8 @@
     "illuminate/http": "~5.2",
     "illuminate/support": "~5.2",
     "illuminate/database": "~5.2",
-    "illuminate/validation": "~5.2"
+    "illuminate/validation": "~5.2",
+    "cviebrock/eloquent-sluggable": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8",
@@ -16,6 +17,7 @@
   "autoload": {
     "psr-4": {
       "CodePress\\CodeTag\\": "src/CodeTag/",
+      "CodePress\\CodePost\\": "../codepost/src/CodePost/",
       "CodePress\\CodeDatabase\\": "../codedatabase/src/CodeDatabase/"
     }
   }

@@ -59,4 +59,10 @@ class Post extends Model implements SluggableInterface
     {
         return $this->morphToMany('\CodePress\CodeCategory\Models\Category', 'categorizable', 'codepress_categorizables');
     }
+
+    public function tags()
+    {
+        return $this->morphToMany('\CodePress\CodeTag\Models\Tag', 'taggable', 'codepress_taggables');
+    }
+
 }
