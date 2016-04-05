@@ -4,7 +4,7 @@ namespace CodePress\CodeCategory\Tests\Models;
 
 
 use CodePress\CodeCategory\Models\Category;
-use CodePress\CodeCategory\Models\Post;
+use CodePress\CodePost\Models\Post;
 use CodePress\CodeCategory\Tests\AbstractTestCase;
 use Illuminate\Validation\Validator;
 use Mockery as m;
@@ -87,8 +87,8 @@ class CategoryTest extends AbstractTestCase
     public function test_can_add_posts_to_categories()
     {
         $category = Category::create(['name' => 'Category Test', 'active' => true]);
-        $post1 = Post::create(['title' => 'My post 1']);
-        $post2 = Post::create(['title' => 'My post 2']);
+        $post1 = Post::create(['title' => 'My post 1', 'content' => 'My content 1']);
+        $post2 = Post::create(['title' => 'My post 2', 'content' => 'My content 2']);
 
         $post1->categories()->save($category);
         $post2->categories()->save($category);

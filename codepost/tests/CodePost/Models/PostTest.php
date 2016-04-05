@@ -3,6 +3,7 @@
 namespace CodePress\CodePost\Tests\Models;
 
 
+use CodePress\CodeCategory\Models\Category;
 use CodePress\CodePost\Models\Post;
 use CodePress\CodePost\Tests\AbstractTestCase;
 use Illuminate\Validation\Validator;
@@ -60,7 +61,7 @@ class PostTest extends AbstractTestCase
             'title' => 'required|max:255',
             'content' => 'required'
         ]);
-        $validator->shouldReceive('setData')->with([ 'title' => 'Post Test']);
+        $validator->shouldReceive('setData')->with(['title' => 'Post Test']);
         $validator->shouldReceive('fails')->andReturn(true);
         $validator->shouldReceive('errors')->andReturn($messageBag);
 
@@ -105,6 +106,24 @@ class PostTest extends AbstractTestCase
 
         $post = Post::findBySlug("post-test-1");
         $this->assertInstanceOf(Post::class, $post);
+    }
+
+    public function test_can_add_categories_to_posts()
+    {
+        $post = Post::create(['title' => 'My Post', 'content' => 'My content']);
+        $category1 = Category::create(['name' => 'Category 1', 'active' => true]);
+        $category2 = Category::create(['name' => 'Category 2', 'active' => true]);
+
+        $category1->posts()->save($post);
+        $category2->posts()->save($post);
+
+        $this->assertCount(1, Post::all());
+        $this->assertEquals('My Post', $category1->posts->first()->title);
+        $this->assertEquals('My Post', $category2->posts->first()->title);
+        $categories = Post::find(1)->categories;
+        $this->assertCount(2, $categories);
+        $this->assertEquals('Category 1', $categories[0]->name);
+        $this->assertEquals('Category 2', $categories[1]->name);
     }
 
 }
