@@ -57,9 +57,9 @@ class Category extends Model implements SluggableInterface
         return true;
     }
 
-    public function categorizable()
+    public function posts()
     {
-        return $this->morphTo();
+        return $this->morphedByMany('\CodePress\CodeCategory\Models\Post', 'categorizable', 'codepress_categorizables');
     }
 
     public function parent()
