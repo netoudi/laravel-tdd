@@ -145,4 +145,16 @@ class PostTest extends AbstractTestCase
         $this->assertEquals('Tag 2', $tags[1]->name);
     }
 
+    public function test_can_add_comments()
+    {
+        $post = Post::create(['title' => 'Post tes', 'content' => 'Content post']);
+        $post->comments()->create(['content' => 'Comment 1']);
+        $post->comments()->create(['content' => 'Comment 2']);
+
+        $comments = Post::find(1)->comments;
+        $this->assertCount(2, $comments);
+        $this->assertEquals('Comment 1', $comments[0]->content);
+        $this->assertEquals('Comment 2', $comments[1]->content);
+    }
+
 }
