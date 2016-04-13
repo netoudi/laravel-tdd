@@ -19,7 +19,9 @@
 
         <div class="form-group">
             {!! Form::label('content', 'Content:') !!}
-            {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+            {{-- Form::textarea('content', null, ['class' => 'form-control']) --}}
+            <textarea name="content" id="mytiny">{{ !empty($post) ? $post->content : '' }}</textarea>
+            @include('tinymce::tpl')
         </div>
 
         <hr>
