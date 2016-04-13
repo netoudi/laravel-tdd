@@ -57,10 +57,17 @@ class AdminPostsTest extends \TestCase
 
         $this->visit('/admin/posts/edit/' . $post->id)
             ->see('Update Post')
+            ->see('Post Edit')
+            ->see('Post Content')
             ->type('Post Edit Update', 'title')
+            ->type('Post Content Update', 'content')
             ->press('Submit')
             ->seePageIs('/admin/posts')
             ->see('Post Edit Update');
+
+        $post = Post::find($post->id);
+        $this->assertEquals('Post Edit Update', $post->title);
+        $this->assertEquals('Post Content Update', $post->content);
     }
 
     public function test_destroy_post()
