@@ -102,4 +102,53 @@ class CategoryTest extends AbstractTestCase
         $this->assertEquals('My post 2', $posts[1]->title);
     }
 
+    public function test_can_soft_deletes()
+    {
+        $category = Category::create(['name' => 'Category Test', 'active' => true]);
+        $category->delete();
+
+        $this->assertEquals(true, $category->trashed());
+        $this->assertCount(0, Category::all());
+    }
+
+    public function test_can_get_rows_deleted()
+    {
+        $category = Category::create(['name' => 'Category Test', 'active' => true]);
+        $category->delete();
+
+        $category = Category::onlyTrashed()->get();
+        $this->assertEquals(1, $category[0]->id);
+        $this->assertEquals('Category Test', $category[0]->name);
+    }
+
+    public function test_can_get_rows_deleted_and_activated()
+    {
+        $category = Category::create(['name' => 'Category Test 1', 'active' => true]);
+        Category::create(['name' => 'Category Test 2', 'active' => true]);
+        $category->delete();
+
+        $categories = Category::withTrashed()->get();
+        $this->assertCount(2, $categories);
+        $this->assertEquals(1, $categories[0]->id);
+        $this->assertEquals('Category Test 1', $categories[0]->name);
+    }
+
+    public function test_can_force_delete()
+    {
+        $category = Category::create(['name' => 'Category Test', 'active' => true]);
+        $category->forceDelete();
+        $this->assertCount(0, Category::all());
+    }
+
+    public function test_can_restore_rows_from_deleted()
+    {
+        $category = Category::create(['name' => 'Category Test', 'active' => true]);
+        $category->delete();
+        $category->restore();
+
+        $category = Category::find(1);
+        $this->assertEquals(1, $category->id);
+        $this->assertEquals('Category Test', $category->name);
+    }
+
 }
