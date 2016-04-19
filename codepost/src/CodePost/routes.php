@@ -8,5 +8,6 @@ Route::group(['prefix' => 'admin/posts', 'as' => 'admin.posts.', 'namespace' => 
     Route::get('/edit/{id}', ['uses' => 'AdminPostsController@edit', 'as' => 'edit']);
     Route::post('/update/{id}', ['uses' => 'AdminPostsController@update', 'as' => 'update']);
     Route::get('/destroy/{id}', ['uses' => 'AdminPostsController@destroy', 'as' => 'destroy']);
+    Route::get('/deleted', ['uses' => 'AdminPostsController@deleted', 'as' => 'deleted']);
 
 });

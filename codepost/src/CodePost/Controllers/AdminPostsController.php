@@ -2,6 +2,7 @@
 
 namespace CodePress\CodePost\Controllers;
 
+use CodePress\CodePost\Models\Post;
 use CodePress\CodePost\Repository\PostRepositoryInterface;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -61,5 +62,12 @@ class AdminPostsController extends Controller
         $this->postRepository->delete($id);
 
         return redirect()->route('admin.posts.index');
+    }
+
+    public function deleted()
+    {
+        $posts = Post::onlyTrashed()->get();
+
+        return view('codepost::deleted', compact('posts'));
     }
 }

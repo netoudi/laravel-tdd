@@ -29,6 +29,32 @@ class AdminPostsTest extends \TestCase
             ->see('Post 4');
     }
 
+    public function test_can_visit_admin_posts_deleted_page()
+    {
+        $this->visit('/admin/posts/deleted')
+            ->see('Posts Deleted');
+    }
+
+    public function test_posts_listing_deleted()
+    {
+        $post1 = Post::create(['title' => 'Post 1', 'content' => 'Post Content']);
+        $post2 = Post::create(['title' => 'Post 2', 'content' => 'Post Content']);
+        $post3 = Post::create(['title' => 'Post 3', 'content' => 'Post Content']);
+        $post4 = Post::create(['title' => 'Post 4', 'content' => 'Post Content']);
+
+        $post1->delete();
+        $post2->delete();
+        $post3->delete();
+        $post4->delete();
+        $post4->restore();
+
+        $this->visit('/admin/posts/deleted')
+            ->see('Post 1')
+            ->see('Post 2')
+            ->see('Post 3')
+            ->dontSee('Post 4');
+    }
+
     public function test_click_create_new_post()
     {
         $this->visit('/admin/posts')
