@@ -188,4 +188,11 @@ class PostTest extends AbstractTestCase
         $this->assertEquals('Post test 1', $posts[0]->title);
     }
 
+    public function test_can_force_delete()
+    {
+        $post = Post::create(['title' => 'Post test 1', 'content' => 'Content post 1']);
+        $post->forceDelete();
+        $this->assertCount(0, Post::all());
+    }
+
 }
