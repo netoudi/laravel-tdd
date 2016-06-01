@@ -31,7 +31,8 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+    $router = new CodePress\CodeUser\Routing\Router();
+    $router->auth();
 
     Route::get('/home', 'HomeController@index');
 });
