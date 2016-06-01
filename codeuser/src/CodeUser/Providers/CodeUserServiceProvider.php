@@ -5,6 +5,7 @@ namespace CodePress\CodeUser\Providers;
 
 use CodePress\CodeUser\Repository\UserRepositoryEloquent;
 use CodePress\CodeUser\Repository\UserRepositoryInterface;
+use CodePress\CodeUser\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class CodeUserServiceProvider extends ServiceProvider
@@ -27,6 +28,9 @@ class CodeUserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepositoryEloquent::class);
+        $this->app->singleton('codepress_user_route', function () {
+            return new Router();
+        });
     }
 
 }

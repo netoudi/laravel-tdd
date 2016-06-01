@@ -11,6 +11,8 @@
 |
 */
 
+use CodePress\CodeUser\Facade\Route as CodePressRoute;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -31,8 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
-    $router = new CodePress\CodeUser\Routing\Router();
-    $router->auth();
+    CodePressRoute::auth();
 
     Route::get('/home', 'HomeController@index');
 });
