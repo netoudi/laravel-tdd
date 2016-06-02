@@ -31,6 +31,7 @@ class CodeUserServiceProvider extends ServiceProvider
         $this->app->singleton('codepress_user_route', function () {
             return new Router();
         });
+        $this->app->register(EventServiceProvider::class);
     }
 
 }

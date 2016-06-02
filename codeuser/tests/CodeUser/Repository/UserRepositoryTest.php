@@ -1,6 +1,6 @@
 <?php
 
-namespace CodePress\CodeUser\Tests\Repository;
+namespace CodePress\CodeUser\Tests;
 
 use CodePress\CodeUser\Models\User;
 use CodePress\CodeUser\Repository\UserRepositoryEloquent;
