@@ -14,15 +14,9 @@ class TestEventListener
         echo "\nEvent number 2";
     }
 
-    public function number3()
-    {
-        echo "\nEvent number 3";
-    }
-
     public function subscribe($events)
     {
-        $events->listen('event.number1', 'CodePress\CodeUser\Listener\TestEventListener@number1');
-        $events->listen('event.number2', 'CodePress\CodeUser\Listener\TestEventListener@number2');
-        $events->listen('TestEventListener\Number3', 'CodePress\CodeUser\Listener\TestEventListener@number3');
+        $events->listen('event.number1', 'CodePress\CodeUser\Listener\TestEventListener@number1', 10);
+        $events->listen('event.number1', 'CodePress\CodeUser\Listener\TestEventListener@number2', 20);
     }
 }
