@@ -2,6 +2,7 @@
 
 namespace CodePress\CodeUser\Providers;
 
+use CodePress\CodeUser\Listener\TestEventListener;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -15,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [];
 
+    protected $subscribe = [
+        TestEventListener::class
+    ];
+
     /**
      * Register any other events for your application.
      *
@@ -24,14 +29,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot(DispatcherContract $events)
     {
         parent::boot($events);
-
-        $events->listen('event.*', function ($param1, $param2) {
-            if (Event::firing() == 'event.asdf') {
-                echo "\nevento asdf foi executado";
-            }
-
-            echo "\n$param1";
-            echo "\n$param2";
-        });
     }
 }
