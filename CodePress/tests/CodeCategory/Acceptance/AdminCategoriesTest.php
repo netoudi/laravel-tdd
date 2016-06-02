@@ -3,15 +3,22 @@
 namespace CodePress\CodeCategory\Testing;
 
 use CodePress\CodeCategory\Models\Category;
+use CodePress\CodeUser\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminCategoriesTest extends \TestCase
 {
     use DatabaseTransactions;
 
+    protected function getUser()
+    {
+        return factory(User::class)->create();
+    }
+
     public function test_can_visit_admin_categories_page()
     {
-        $this->visit('/admin/categories')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories')
             ->see('Categories');
     }
 
@@ -22,7 +29,8 @@ class AdminCategoriesTest extends \TestCase
         Category::create(['name' => 'Category 3', 'active' => true]);
         Category::create(['name' => 'Category 4', 'active' => true]);
 
-        $this->visit('/admin/categories')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories')
             ->see('Category 1')
             ->see('Category 2')
             ->see('Category 3')
@@ -31,7 +39,8 @@ class AdminCategoriesTest extends \TestCase
 
     public function test_click_create_new_category()
     {
-        $this->visit('/admin/categories')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories')
             ->click('New Category')
             ->seePageIs('/admin/categories/create')
             ->see('Create Category');
@@ -39,7 +48,8 @@ class AdminCategoriesTest extends \TestCase
 
     public function test_create_new_category()
     {
-        $this->visit('/admin/categories/create')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories/create')
             ->type('Category Test', 'name')
             ->check('active')
             ->press('Submit')
@@ -51,11 +61,13 @@ class AdminCategoriesTest extends \TestCase
     {
         $category = Category::create(['name' => 'Category Edit', 'active' => true]);
 
-        $this->visit('/admin/categories')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories')
             ->see('Category Edit')
             ->see('Delete');
 
-        $this->visit('/admin/categories/edit/' . $category->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories/edit/' . $category->id)
             ->see('Update Category')
             ->type('Category Edit Update', 'name')
             ->check('active')
@@ -68,11 +80,13 @@ class AdminCategoriesTest extends \TestCase
     {
         $category = Category::create(['name' => 'Category Destroy', 'active' => true]);
 
-        $this->visit('/admin/categories')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories')
             ->see('Category Destroy')
             ->see('Delete');
 
-        $this->visit('/admin/categories/destroy/' . $category->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/categories/destroy/' . $category->id)
             ->seePageIs('/admin/categories')
             ->dontSee('Category Destroy');
     }

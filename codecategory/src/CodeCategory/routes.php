@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'admin/categories', 'as' => 'admin.categories.', 'namespace' => 'CodePress\CodeCategory\Controllers', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'admin/categories', 'as' => 'admin.categories.', 'namespace' => 'CodePress\CodeCategory\Controllers', 'middleware' => ['web', 'auth']], function () {
 
     Route::get('/', ['uses' => 'AdminCategoriesController@index', 'as' => 'index']);
     Route::get('/create', ['uses' => 'AdminCategoriesController@create', 'as' => 'create']);

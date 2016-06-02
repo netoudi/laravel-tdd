@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => CodePress\CodeUser\Models\User::class,
         ],
 
         // 'users' => [
@@ -99,7 +99,7 @@ return [
         'users' => [
             'provider' => 'users',
             'email' => 'auth.emails.password',
-            'table' => 'password_resets',
+            'table' => 'codepress_password_resets',
             'expire' => 60,
         ],
     ],

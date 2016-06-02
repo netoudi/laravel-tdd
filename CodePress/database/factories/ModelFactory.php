@@ -14,8 +14,9 @@
 use CodePress\CodeCategory\Models\Category;
 use CodePress\CodePost\Models\Post;
 use CodePress\CodeTag\Models\Tag;
+use CodePress\CodeUser\Models\User;
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
