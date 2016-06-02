@@ -3,6 +3,7 @@
 use CodePress\CodeCategory\Models\Category;
 use CodePress\CodePost\Models\Post;
 use CodePress\CodeTag\Models\Tag;
+use CodePress\CodeUser\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +22,12 @@ class DatabaseSeeder extends Seeder
         factory(Tag::class, 5)->create();
 
         factory(Post::class, 5)->create();
+
+        factory(User::class)->create([
+            'name' => 'user',
+            'email' => 'user@email',
+            'password' => bcrypt(123456),
+            'remember_token' => str_random(10),
+        ]);
     }
 }
