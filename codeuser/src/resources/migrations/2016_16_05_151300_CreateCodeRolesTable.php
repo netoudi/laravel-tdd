@@ -15,7 +15,7 @@ class CreateCodeRolesTable extends Migration
         Schema::create('codepress_roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamp();
+            $table->timestamps();
         });
     }
 

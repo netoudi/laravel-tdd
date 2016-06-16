@@ -32,7 +32,7 @@ class UsersControllerTest extends AbstractTestCase
         $userRepository->shouldReceive('all')->andReturn($usersResult);
 
         $responseFactory->shouldReceive('view')
-            ->with('codeuser::index', ['users' => $usersResult])
+            ->with('codeuser::admin.user.index', ['users' => $usersResult])
             ->andReturn($html);
 
         $this->assertEquals($controller->index(), $html);

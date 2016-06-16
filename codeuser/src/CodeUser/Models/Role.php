@@ -50,7 +50,7 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'codepress_users_roles', 'role_id', 'user_id');
     }
 
-    public function premissions()
+    public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'codepress_permissions_roles', 'role_id', 'permission_id');
     }
