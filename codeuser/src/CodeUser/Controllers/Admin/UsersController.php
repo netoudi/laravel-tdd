@@ -28,12 +28,12 @@ class UsersController extends Controller
     {
         $users = $this->userRepository->all();
 
-        return $this->responseFactory->view('codeuser::index', compact('users'));
+        return $this->responseFactory->view('codeuser::admin.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('codeuser::form');
+        return view('codeuser::admin.user.form');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class UsersController extends Controller
     {
         $user = $this->userRepository->find($id);
 
-        return view('codeuser::form', compact('user'));
+        return view('codeuser::admin.user.form', compact('user'));
     }
 
     public function update(Request $request, $id)
