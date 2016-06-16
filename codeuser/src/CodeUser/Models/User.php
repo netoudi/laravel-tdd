@@ -64,4 +64,19 @@ class User extends Authenticatable
 
         return true;
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'codepress_users_roles', 'user_id', 'role_id');
+    }
+
+    public function hasRole($role)
+    {
+        return is_string($role) ? $this->roles->contains('name', $role) : $this->intersect($this->roles)->count();
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole(Role::ROLE_ADMIN);
+    }
 }
