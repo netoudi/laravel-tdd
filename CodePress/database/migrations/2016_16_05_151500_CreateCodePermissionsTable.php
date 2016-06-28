@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCodeUsersTable extends Migration
+class CreateCodePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateCodeUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('codepress_users', function (Blueprint $table) {
+        Schema::create('codepress_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password', 60);
-            $table->rememberToken();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateCodeUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('codepress_users');
+        Schema::drop('codepress_permissions');
     }
 }

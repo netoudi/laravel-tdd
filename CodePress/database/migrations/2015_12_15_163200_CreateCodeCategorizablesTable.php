@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateCodeCategorizablesTable
+class CreateCodeCategorizablesTable extends Migration
 {
-
     public function up()
     {
         Schema::create('codepress_categorizables', function (Blueprint $table) {
@@ -19,5 +18,4 @@ class CreateCodeCategorizablesTable
     {
         Schema::drop('codepress_categorizables');
     }
-
 }
