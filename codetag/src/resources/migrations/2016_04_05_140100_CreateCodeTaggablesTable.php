@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateCodeTaggablesTable
+class CreateCodeTaggablesTable extends Migration
 {
-
     public function up()
     {
         Schema::create('codepress_taggables', function (Blueprint $table) {
@@ -19,5 +18,4 @@ class CreateCodeTaggablesTable
     {
         Schema::drop('codepress_taggables');
     }
-
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddSofDeletesToCodeTagsTable
+class AddSofDeletesToCodeTagsTable extends Migration
 {
     public function up()
     {
