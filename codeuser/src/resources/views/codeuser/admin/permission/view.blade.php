@@ -6,6 +6,8 @@
 
         <h3>Permission Details</h3>
 
+        <br><br>
+
         <ul class="list-unstyled">
             <li>
                 <strong>Name:</strong> {{ $permission->name }}

@@ -5,7 +5,7 @@
     <div class="container">
         <h3>Permissions</h3>
 
-        <a href="{{ route('admin.permissions.create') }}" class="btn btn-default btn-sm pull-right">New User</a>
+        {{--<a href="{{ route('admin.permissions.create') }}" class="btn btn-default btn-sm pull-right">New Permission</a>--}}
 
         <br><br>
 

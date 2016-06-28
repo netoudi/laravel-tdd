@@ -34,7 +34,7 @@ class RolesController extends Controller
 
     public function create()
     {
-        return view('codeuser::amdin.role.form');
+        return view('codeuser::admin.role.form');
     }
 
     public function store(Request $request)
