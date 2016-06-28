@@ -64,9 +64,10 @@ abstract class AbstractRepository implements RepositoryInterface, CriteriaCollec
         return $this->model->where($field, '=', $value)->get($columns);
     }
 
-    public function lists($columns = '*')
+    public function lists($columns = '*', $key = null)
     {
-        return $this->model->lists($columns);
+        $this->applyCriteria();
+        return $this->model->lists($columns, $key);
     }
 
     public function addCriteria(CriteriaInterface $criteriaInterface)

@@ -22,6 +22,23 @@
             {!! Form::text('email', null, ['class' => 'form-control']) !!}
         </div>
 
+        @if(!empty($user))
+            <div class="form-group">
+                {!! Form::label('roles[]', 'Roles:') !!}
+                {!! Form::select('roles[]', $roles, $user->roles->lists('id')->toArray(), ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+            </div>
+        @else
+            <div class="form-group">
+                {!! Form::label('password', 'Password:') !!}
+                {!! Form::password('password', ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('roles[]', 'Roles:') !!}
+                {!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+            </div>
+        @endif
+
         <hr>
 
         <div class="form-group text-right">

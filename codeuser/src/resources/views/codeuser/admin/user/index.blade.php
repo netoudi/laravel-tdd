@@ -14,6 +14,7 @@
             <tr>
                 <th width="5%">Id</th>
                 <th>Name</th>
+                <th>E-mail</th>
                 <th width="10%">Action</th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
                     <td>
                         <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}" class="btn btn-primary btn-xs">Edit</a>
                         <a href="{{ route('admin.users.destroy', ['id' => $user->id]) }}" class="btn btn-danger btn-xs">Delete</a>
