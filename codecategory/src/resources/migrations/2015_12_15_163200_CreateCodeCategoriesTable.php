@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateCodeCategoriesTable
+class CreateCodeCategoriesTable extends Migration
 {
-
     public function up()
     {
         Schema::create('codepress_categories', function (Blueprint $table) {
@@ -23,7 +22,9 @@ class CreateCodeCategoriesTable
 
     public function down()
     {
+        Schema::table('codepress_categories', function (Blueprint $table) {
+            $table->dropForeign('codepress_categories_parent_id_foreign');
+        });
         Schema::drop('codepress_categories');
     }
-
 }
