@@ -17,12 +17,53 @@ class CreateCodeDataAcl extends Migration
         $roleEditor = Role::create(['name' => Role::ROLE_EDITOR]);
         $roleRedactor = Role::create(['name' => Role::ROLE_REDACTOR]);
 
+        $permissionAccessUsers = Permission::create([
+            'name' => 'permission_users',
+            'description' => 'Permission to access the area users.'
+        ]);
+
+        $permissionAccessRoles = Permission::create([
+            'name' => 'permission_roles',
+            'description' => 'Permission to access the area roles.'
+        ]);
+
+        $permissionAccessPermissions = Permission::create([
+            'name' => 'permission_permissions',
+            'description' => 'Permission to access the area permissions.'
+        ]);
+
+        $permissionAccessCategories = Permission::create([
+            'name' => 'permission_categories',
+            'description' => 'Permission to access the area categories.'
+        ]);
+
+        $permissionAccessTags = Permission::create([
+            'name' => 'permission_tags',
+            'description' => 'Permission to access the area tags.'
+        ]);
+
+        $permissionAccessPosts = Permission::create([
+            'name' => 'permission_posts',
+            'description' => 'Permission to access the area posts.'
+        ]);
+
         $permissionPublishPost = Permission::create([
             'name' => 'publish_post',
             'description' => 'Permission to publish posts that are in draft.'
         ]);
 
+        $roleAdmin->permissions()->save($permissionAccessUsers);
+        $roleAdmin->permissions()->save($permissionAccessRoles);
+        $roleAdmin->permissions()->save($permissionAccessPermissions);
+        $roleAdmin->permissions()->save($permissionAccessCategories);
+        $roleAdmin->permissions()->save($permissionAccessTags);
+        $roleAdmin->permissions()->save($permissionAccessPosts);
+        $roleAdmin->permissions()->save($permissionPublishPost);
+
+        $roleEditor->permissions()->save($permissionAccessPosts);
         $roleEditor->permissions()->save($permissionPublishPost);
+
+        $roleRedactor->permissions()->save($permissionAccessPosts);
     }
 
     /**
