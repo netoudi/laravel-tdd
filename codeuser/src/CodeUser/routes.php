@@ -1,6 +1,11 @@
 <?php
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'CodePress\CodeUser\Controllers', 'middleware' => ['web']], function () {
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'namespace' => 'CodePress\CodeUser\Controllers',
+    'middleware' => ['web', 'auth']
+], function () {
 
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::get('/', ['uses' => 'Admin\UsersController@index', 'as' => 'index']);

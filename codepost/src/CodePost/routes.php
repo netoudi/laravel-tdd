@@ -1,6 +1,11 @@
 <?php
 
-Route::group(['prefix' => 'admin/posts', 'as' => 'admin.posts.', 'namespace' => 'CodePress\CodePost\Controllers', 'middleware' => ['web']], function () {
+Route::group([
+    'prefix' => 'admin/posts',
+    'as' => 'admin.posts.',
+    'namespace' => 'CodePress\CodePost\Controllers',
+    'middleware' => ['web', 'auth']
+], function () {
 
     Route::get('/', ['uses' => 'AdminPostsController@index', 'as' => 'index']);
     Route::get('/create', ['uses' => 'AdminPostsController@create', 'as' => 'create']);
