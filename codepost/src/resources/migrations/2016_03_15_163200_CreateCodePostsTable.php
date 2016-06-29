@@ -1,5 +1,6 @@
 <?php
 
+use CodePress\CodePost\Models\Post;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -12,6 +13,7 @@ class CreateCodePostsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content');
+            $table->integer('state')->default(Post::STATE_DRAFT);
             $table->timestamps();
         });
     }

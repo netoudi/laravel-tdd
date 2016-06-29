@@ -13,6 +13,10 @@ class Post extends Model implements SluggableInterface
 {
     use SluggableTrait, SoftDeletes;
 
+    const STATE_PUBLISHED = 1;
+
+    const STATE_DRAFT = 2;
+
     protected $table = "codepress_posts";
 
     protected $dates = ['deleted_at'];
