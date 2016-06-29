@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        return is_string($role) ? $this->roles->contains('name', $role) : $this->intersect($this->roles)->count();
+        return is_string($role) ? $this->roles->contains('name', $role) : $role->intersect($this->roles)->count();
     }
 
     public function isAdmin()
