@@ -48,9 +48,12 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/admin/categories') }}">Categories</a></li>
-                    <li><a href="{{ url('/admin/tags') }}">Tags</a></li>
-                    <li><a href="{{ url('/admin/posts') }}">Posts</a></li>
+                    <li><a href="{{ route('admin.categories.index') }}">Categories</a></li>
+                    <li><a href="{{ route('admin.tags.index') }}">Tags</a></li>
+                    <li><a href="{{ route('admin.posts.index') }}">Posts</a></li>
+                    <li><a href="{{ route('admin.users.index') }}">Users</a></li>
+                    <li><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+                    <li><a href="{{ route('admin.permissions.index') }}">Permissions</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

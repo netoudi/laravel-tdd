@@ -20,6 +20,7 @@ class AdminPostsController extends Controller
 
     public function __construct(ResponseFactory $responseFactory, PostRepositoryInterface $postRepository)
     {
+        $this->authorize('access_posts');
         $this->responseFactory = $responseFactory;
         $this->postRepository = $postRepository;
     }

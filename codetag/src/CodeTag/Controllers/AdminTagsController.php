@@ -19,6 +19,7 @@ class AdminTagsController extends Controller
 
     public function __construct(ResponseFactory $responseFactory, TagRepositoryInterface $tagRepository)
     {
+        $this->authorize('access_tags');
         $this->responseFactory = $responseFactory;
         $this->tagRepository = $tagRepository;
     }

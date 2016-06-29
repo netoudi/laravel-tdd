@@ -24,8 +24,15 @@ class DatabaseSeeder extends Seeder
         factory(Post::class, 5)->create();
 
         factory(User::class)->create([
-            'name' => 'user',
-            'email' => 'user@email',
+            'name' => 'Editor',
+            'email' => 'editor@codepress.com',
+            'password' => bcrypt(123456),
+            'remember_token' => str_random(10),
+        ]);
+
+        factory(User::class)->create([
+            'name' => 'Redactor',
+            'email' => 'redactor@codepress.com',
             'password' => bcrypt(123456),
             'remember_token' => str_random(10),
         ]);
