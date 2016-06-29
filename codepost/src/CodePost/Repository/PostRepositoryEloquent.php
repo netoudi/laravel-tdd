@@ -7,6 +7,15 @@ use CodePress\CodePost\Models\Post;
 
 class PostRepositoryEloquent extends AbstractRepository implements PostRepositoryInterface
 {
+    public function updateState($id, $state)
+    {
+        $post = $this->find($id);
+        $post->state = $state;
+        $post->save();
+
+        return $post;
+    }
+
     public function model()
     {
         return Post::class;

@@ -58,6 +58,15 @@ class AdminPostsController extends Controller
         return redirect()->route('admin.posts.index');
     }
 
+    public function updateState(Request $request, $id)
+    {
+        $this->authorize('publish_post');
+
+        $this->postRepository->updateState($id, $request->get('state'));
+
+        return redirect()->route('admin.posts.edit', ['id' => $id]);
+    }
+
     public function destroy($id)
     {
         $this->postRepository->delete($id);

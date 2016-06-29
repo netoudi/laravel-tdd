@@ -14,6 +14,7 @@
             <tr>
                 <th width="5%">Id</th>
                 <th>Title</th>
+                <th>State</th>
                 <th width="10%">Action</th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
+                    <td><?= ($post->state == $post::STATE_PUBLISHED) ? 'Published' : 'Draft'; ?></td>
                     <td>
                         <a href="{{ route('admin.posts.edit', ['id' => $post->id]) }}" class="btn btn-primary btn-xs">Edit</a>
                         <a href="{{ route('admin.posts.destroy', ['id' => $post->id]) }}" class="btn btn-danger btn-xs">Delete</a>
