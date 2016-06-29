@@ -17,6 +17,18 @@
             {!! Form::text('name', null, ['class' => 'form-control']) !!}
         </div>
 
+        @if(!empty($role))
+            <div class="form-group">
+                {!! Form::label('permissions[]', 'Permissions:') !!}
+                {!! Form::select('permissions[]', $permissions, $role->permissions->lists('id')->toArray(), ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+            </div>
+        @else
+            <div class="form-group">
+                {!! Form::label('permissions[]', 'Permissions:') !!}
+                {!! Form::select('permissions[]', $permissions, null, ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+            </div>
+        @endif
+
         <hr>
 
         <div class="form-group text-right">

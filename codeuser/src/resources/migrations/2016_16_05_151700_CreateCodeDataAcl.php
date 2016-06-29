@@ -18,32 +18,32 @@ class CreateCodeDataAcl extends Migration
         $roleRedactor = Role::create(['name' => Role::ROLE_REDACTOR]);
 
         $permissionAccessUsers = Permission::create([
-            'name' => 'permission_users',
+            'name' => 'access_users',
             'description' => 'Permission to access the area users.'
         ]);
 
         $permissionAccessRoles = Permission::create([
-            'name' => 'permission_roles',
+            'name' => 'access_roles',
             'description' => 'Permission to access the area roles.'
         ]);
 
         $permissionAccessPermissions = Permission::create([
-            'name' => 'permission_permissions',
+            'name' => 'access_permissions',
             'description' => 'Permission to access the area permissions.'
         ]);
 
         $permissionAccessCategories = Permission::create([
-            'name' => 'permission_categories',
+            'name' => 'access_categories',
             'description' => 'Permission to access the area categories.'
         ]);
 
         $permissionAccessTags = Permission::create([
-            'name' => 'permission_tags',
+            'name' => 'access_tags',
             'description' => 'Permission to access the area tags.'
         ]);
 
         $permissionAccessPosts = Permission::create([
-            'name' => 'permission_posts',
+            'name' => 'access_posts',
             'description' => 'Permission to access the area posts.'
         ]);
 
