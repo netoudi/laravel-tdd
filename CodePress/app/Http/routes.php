@@ -14,7 +14,7 @@
 use CodePress\CodeUser\Facade\Route as CodePressRoute;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('admin');
 });
 
 /*
@@ -35,5 +35,5 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => 'web'], function () {
     CodePressRoute::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/admin', 'HomeController@index');
 });

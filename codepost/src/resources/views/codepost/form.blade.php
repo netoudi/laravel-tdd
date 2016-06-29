@@ -33,25 +33,27 @@
 
         {!! Form::close() !!}
 
-        <h3>State Post: <?= ($post->state == $post::STATE_PUBLISHED) ? 'Published' : 'Draft'; ?></h3>
-        <hr>
-        @if(!empty($post))
-            @if ($post->state == $post::STATE_PUBLISHED)
-                {!! Form::open(['route' => ['admin.posts.update-state', $post->id], 'method' => 'patch']) !!}
-                {!! Form::hidden('state', $post::STATE_DRAFT) !!}
-                <div class="form-group text-right">
-                    {!! Form::submit('Draft', ['class'=>'btn btn-warning btn-sm']) !!}
-                </div>
-                {!! Form::close() !!}
-            @else
-                {!! Form::open(['route' => ['admin.posts.update-state', $post->id], 'method' => 'patch']) !!}
-                {!! Form::hidden('state', $post::STATE_PUBLISHED) !!}
-                <div class="form-group text-right">
-                    {!! Form::submit('Publish', ['class'=>'btn btn-success btn-sm']) !!}
-                </div>
-                {!! Form::close() !!}
+        @can('publish_post')
+            <h3>State Post: <?= ($post->state == $post::STATE_PUBLISHED) ? 'Published' : 'Draft'; ?></h3>
+            <hr>
+            @if(!empty($post))
+                @if ($post->state == $post::STATE_PUBLISHED)
+                    {!! Form::open(['route' => ['admin.posts.update-state', $post->id], 'method' => 'patch']) !!}
+                    {!! Form::hidden('state', $post::STATE_DRAFT) !!}
+                    <div class="form-group text-right">
+                        {!! Form::submit('Draft', ['class'=>'btn btn-warning btn-sm']) !!}
+                    </div>
+                    {!! Form::close() !!}
+                @else
+                    {!! Form::open(['route' => ['admin.posts.update-state', $post->id], 'method' => 'patch']) !!}
+                    {!! Form::hidden('state', $post::STATE_PUBLISHED) !!}
+                    <div class="form-group text-right">
+                        {!! Form::submit('Publish', ['class'=>'btn btn-success btn-sm']) !!}
+                    </div>
+                    {!! Form::close() !!}
+                @endif
             @endif
-        @endif
+        @endcan
 
     </div>
 
