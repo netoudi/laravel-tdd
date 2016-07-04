@@ -24,10 +24,10 @@ class AuthTest extends \TestCase
     public function test_can_login_in_application()
     {
         $this->visit('/login')
-            ->type('user@email', 'email')
+            ->type('admin@codepress.com', 'email')
             ->type('123456', 'password')
             ->press('Login')
-            ->seePageIs('/home')
+            ->seePageIs('/admin')
             ->see('Dashboard');
     }
 
@@ -47,7 +47,7 @@ class AuthTest extends \TestCase
 
         $this->actingAs($this->getUser())
             ->visit('/logout')
-            ->seePageIs('/');
+            ->seePageIs('/login');
 
         $this->actingAs($this->getUser())
             ->visit('/logout')
