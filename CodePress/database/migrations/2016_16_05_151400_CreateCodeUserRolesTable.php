@@ -14,9 +14,9 @@ class CreateCodeUserRolesTable extends Migration
     {
         Schema::create('codepress_users_roles', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('codepress_users');
+            $table->foreign('user_id')->references('id')->on('codepress_users')->onDelete('cascade');
             $table->integer('role_id')->unsigned();
-            $table->foreign('role_id')->references('id')->on('codepress_roles');
+            $table->foreign('role_id')->references('id')->on('codepress_roles')->onDelete('cascade');
         });
     }
 
