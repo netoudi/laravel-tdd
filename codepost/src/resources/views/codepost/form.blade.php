@@ -34,9 +34,9 @@
         {!! Form::close() !!}
 
         @can('publish_post')
-            <h3>State Post: <?= ($post->state == $post::STATE_PUBLISHED) ? 'Published' : 'Draft'; ?></h3>
-            <hr>
             @if(!empty($post))
+                <h3>State Post: <?= ($post->state == $post::STATE_PUBLISHED) ? 'Published' : 'Draft'; ?></h3>
+                <hr>
                 @if ($post->state == $post::STATE_PUBLISHED)
                     {!! Form::open(['route' => ['admin.posts.update-state', $post->id], 'method' => 'patch']) !!}
                     {!! Form::hidden('state', $post::STATE_DRAFT) !!}
