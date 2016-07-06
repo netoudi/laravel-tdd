@@ -3,15 +3,25 @@
 namespace CodePress\CodePost\Testing;
 
 use CodePress\CodePost\Models\Post;
+use CodePress\CodeUser\Models\Role;
+use CodePress\CodeUser\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminPostsTest extends \TestCase
 {
     use DatabaseTransactions;
 
+    protected function getUser()
+    {
+        $user = factory(User::class)->create();
+        $user->roles()->save(Role::find(1)); //ROLE_ADMIN
+        return $user;
+    }
+
     public function test_can_visit_admin_posts_page()
     {
-        $this->visit('/admin/posts')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts')
             ->see('Posts');
     }
 
@@ -22,7 +32,8 @@ class AdminPostsTest extends \TestCase
         Post::create(['title' => 'Post 3', 'content' => 'Post Content']);
         Post::create(['title' => 'Post 4', 'content' => 'Post Content']);
 
-        $this->visit('/admin/posts')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts')
             ->see('Post 1')
             ->see('Post 2')
             ->see('Post 3')
@@ -31,7 +42,8 @@ class AdminPostsTest extends \TestCase
 
     public function test_can_visit_admin_posts_deleted_page()
     {
-        $this->visit('/admin/posts/deleted')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts/deleted')
             ->see('Posts Deleted');
     }
 
@@ -48,7 +60,8 @@ class AdminPostsTest extends \TestCase
         $post4->delete();
         $post4->restore();
 
-        $this->visit('/admin/posts/deleted')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts/deleted')
             ->see('Post 1')
             ->see('Post 2')
             ->see('Post 3')
@@ -57,7 +70,8 @@ class AdminPostsTest extends \TestCase
 
     public function test_click_create_new_post()
     {
-        $this->visit('/admin/posts')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts')
             ->click('New Post')
             ->seePageIs('/admin/posts/create')
             ->see('Create Post');
@@ -65,7 +79,8 @@ class AdminPostsTest extends \TestCase
 
     public function test_create_new_post()
     {
-        $this->visit('/admin/posts/create')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts/create')
             ->type('Post Test', 'title')
             ->type('Post Content', 'content')
             ->press('Submit')
@@ -77,11 +92,13 @@ class AdminPostsTest extends \TestCase
     {
         $post = Post::create(['title' => 'Post Edit', 'content' => 'Post Content']);
 
-        $this->visit('/admin/posts')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts')
             ->see('Post Edit')
             ->see('Delete');
 
-        $this->visit('/admin/posts/edit/' . $post->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts/edit/' . $post->id)
             ->see('Update Post')
             ->see('Post Edit')
             ->see('Post Content')
@@ -100,11 +117,13 @@ class AdminPostsTest extends \TestCase
     {
         $post = Post::create(['title' => 'Post Destroy', 'content' => 'Post Content']);
 
-        $this->visit('/admin/posts')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts')
             ->see('Post Destroy')
             ->see('Delete');
 
-        $this->visit('/admin/posts/destroy/' . $post->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/posts/destroy/' . $post->id)
             ->seePageIs('/admin/posts')
             ->dontSee('Post Destroy');
     }

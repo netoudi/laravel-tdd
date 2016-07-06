@@ -3,6 +3,7 @@
 namespace CodePress\CodeCategory\Testing;
 
 use CodePress\CodeCategory\Models\Category;
+use CodePress\CodeUser\Models\Role;
 use CodePress\CodeUser\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -12,7 +13,9 @@ class AdminCategoriesTest extends \TestCase
 
     protected function getUser()
     {
-        return factory(User::class)->create();
+        $user = factory(User::class)->create();
+        $user->roles()->save(Role::find(1)); //ROLE_ADMIN
+        return $user;
     }
 
     public function test_cannot_access_categories()

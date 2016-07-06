@@ -3,15 +3,25 @@
 namespace CodePress\CodeTag\Testing;
 
 use CodePress\CodeTag\Models\Tag;
+use CodePress\CodeUser\Models\Role;
+use CodePress\CodeUser\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AdminTagsTest extends \TestCase
 {
     use DatabaseTransactions;
 
+    protected function getUser()
+    {
+        $user = factory(User::class)->create();
+        $user->roles()->save(Role::find(1)); //ROLE_ADMIN
+        return $user;
+    }
+
     public function test_can_visit_admin_tags_page()
     {
-        $this->visit('/admin/tags')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags')
             ->see('Tags');
     }
 
@@ -22,7 +32,8 @@ class AdminTagsTest extends \TestCase
         Tag::create(['name' => 'Tag 3']);
         Tag::create(['name' => 'Tag 4']);
 
-        $this->visit('/admin/tags')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags')
             ->see('Tag 1')
             ->see('Tag 2')
             ->see('Tag 3')
@@ -31,7 +42,8 @@ class AdminTagsTest extends \TestCase
 
     public function test_click_create_new_tag()
     {
-        $this->visit('/admin/tags')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags')
             ->click('New Tag')
             ->seePageIs('/admin/tags/create')
             ->see('Create Tag');
@@ -39,7 +51,8 @@ class AdminTagsTest extends \TestCase
 
     public function test_create_new_tag()
     {
-        $this->visit('/admin/tags/create')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags/create')
             ->type('Tag Test', 'name')
             ->press('Submit')
             ->seePageIs('/admin/tags')
@@ -50,11 +63,13 @@ class AdminTagsTest extends \TestCase
     {
         $category = Tag::create(['name' => 'Tag Edit']);
 
-        $this->visit('/admin/tags')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags')
             ->see('Tag Edit')
             ->see('Delete');
 
-        $this->visit('/admin/tags/edit/' . $category->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags/edit/' . $category->id)
             ->see('Update Tag')
             ->type('Tag Edit Update', 'name')
             ->press('Submit')
@@ -66,11 +81,13 @@ class AdminTagsTest extends \TestCase
     {
         $category = Tag::create(['name' => 'Tag Destroy']);
 
-        $this->visit('/admin/tags')
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags')
             ->see('Tag Destroy')
             ->see('Delete');
 
-        $this->visit('/admin/tags/destroy/' . $category->id)
+        $this->actingAs($this->getUser())
+            ->visit('/admin/tags/destroy/' . $category->id)
             ->seePageIs('/admin/tags')
             ->dontSee('Tag Destroy');
     }
