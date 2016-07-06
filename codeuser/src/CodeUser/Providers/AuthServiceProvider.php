@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        if (!app()->runningInConsole()) {
+        if (!app()->runningInConsole() || app()->runningUnitTests()) {
             /** @var PermissionRepositoryInterface $permissionRepository */
             $permissionRepository = app(PermissionRepositoryInterface::class);
             $permissions = $permissionRepository->all();
