@@ -4,7 +4,7 @@ Route::group([
     'prefix' => 'admin/tags',
     'as' => 'admin.tags.',
     'namespace' => 'CodePress\CodeTag\Controllers',
-    'middleware' => ['web', 'auth']
+    'middleware' => ['web', 'auth', 'authorization']
 ], function () {
 
     Route::get('/', ['uses' => 'AdminTagsController@index', 'as' => 'index']);

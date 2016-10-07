@@ -4,7 +4,7 @@ Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
     'namespace' => 'CodePress\CodeUser\Controllers',
-    'middleware' => ['web', 'auth']
+    'middleware' => ['web', 'auth', 'authorization']
 ], function () {
 
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {

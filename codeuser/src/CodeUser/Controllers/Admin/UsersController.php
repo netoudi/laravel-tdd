@@ -28,7 +28,7 @@ class UsersController extends Controller
         UserRepositoryInterface $userRepository,
         RoleRepositoryInterface $roleRepository
     ) {
-        $this->authorize('access_users');
+        // $this->authorize('access_users');
         $this->responseFactory = $responseFactory;
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
