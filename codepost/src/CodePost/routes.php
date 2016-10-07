@@ -4,7 +4,7 @@ Route::group([
     'prefix' => 'admin/posts',
     'as' => 'admin.posts.',
     'namespace' => 'CodePress\CodePost\Controllers',
-    'middleware' => ['web', 'auth', 'authorization']
+    'middleware' => ['web', 'auth', 'authorization:access_posts'],
 ], function () {
 
     Route::get('/', ['uses' => 'AdminPostsController@index', 'as' => 'index']);
@@ -12,7 +12,11 @@ Route::group([
     Route::post('/store', ['uses' => 'AdminPostsController@store', 'as' => 'store']);
     Route::get('/edit/{id}', ['uses' => 'AdminPostsController@edit', 'as' => 'edit']);
     Route::post('/update/{id}', ['uses' => 'AdminPostsController@update', 'as' => 'update']);
-    Route::patch('/update-state/{id}', ['uses' => 'AdminPostsController@updateState', 'as' => 'update-state']);
+    Route::patch('/update-state/{id}', [
+        'uses' => 'AdminPostsController@updateState',
+        'as' => 'update-state',
+        'middleware' => ['authorization:publish_post'],
+    ]);
     Route::get('/destroy/{id}', ['uses' => 'AdminPostsController@destroy', 'as' => 'destroy']);
     Route::get('/deleted', ['uses' => 'AdminPostsController@deleted', 'as' => 'deleted']);
 
