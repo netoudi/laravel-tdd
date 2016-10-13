@@ -9,7 +9,6 @@ use CodePress\CodeUser\Models\User;
 use CodePress\CodeUser\Repository\PermissionRepositoryInterface;
 use CodePress\CodeUser\Repository\RoleRepositoryInterface;
 use CodePress\CodeUser\Repository\UserRepositoryInterface;
-use CodePress\CodeUser\Tests\AbstractTestCase;
 use Illuminate\Support\Facades\Hash;
 
 class AuthorizationRepositoryTest extends AbstractTestCase
@@ -34,11 +33,13 @@ class AuthorizationRepositoryTest extends AbstractTestCase
         $this->createUser();
         $this->createRoles();
 
-        $this->assertCount(3, $this->app->make(RoleRepositoryInterface::class)->all());
-        $this->app->make(UserRepositoryInterface::class)->addRoles(1, [1, 2, 3]);
-        $this->assertCount(3, User::find(1)->roles);
-        $this->assertCount(1, Role::find(1)->users);
-        $this->assertTrue(User::find(1)->isAdmin());
+        $this->assertCount(6, $this->app->make(RoleRepositoryInterface::class)->all());
+        $this->app->make(UserRepositoryInterface::class)->addRoles(2, [4, 5, 6]);
+        $this->assertCount(3, User::find(2)->roles);
+        $this->assertCount(1, Role::find(4)->users);
+        $this->assertCount(1, Role::find(5)->users);
+        $this->assertCount(1, Role::find(6)->users);
+        $this->assertTrue(User::find(2)->isAdmin());
     }
 
     public function test_can_create_permissions()
@@ -46,14 +47,14 @@ class AuthorizationRepositoryTest extends AbstractTestCase
         $this->createRoles();
         $this->createPermissions();
 
-        $this->assertCount(3, $this->app->make(PermissionRepositoryInterface::class)->all());
-        $this->app->make(RoleRepositoryInterface::class)->addPermissions(1, [1, 2]);
-        $this->app->make(RoleRepositoryInterface::class)->addPermissions(2, [1]);
-        $this->app->make(RoleRepositoryInterface::class)->addPermissions(3, [1, 2, 3]);
-        $this->assertCount(1, Role::find(2)->permissions);
-        $this->assertCount(2, Role::find(1)->permissions);
-        $this->assertCount(3, Role::find(3)->permissions);
-        $this->assertCount(3, Permission::find(1)->roles);
+        $this->assertCount(10, $this->app->make(PermissionRepositoryInterface::class)->all());
+        $this->app->make(RoleRepositoryInterface::class)->addPermissions(4, [8, 9]);
+        $this->app->make(RoleRepositoryInterface::class)->addPermissions(5, [8]);
+        $this->app->make(RoleRepositoryInterface::class)->addPermissions(6, [8, 9, 10]);
+        $this->assertCount(2, Role::find(4)->permissions);
+        $this->assertCount(1, Role::find(5)->permissions);
+        $this->assertCount(3, Role::find(6)->permissions);
+        $this->assertCount(3, Permission::find(8)->roles);
     }
 
     private function createUser()
@@ -63,7 +64,7 @@ class AuthorizationRepositoryTest extends AbstractTestCase
         return $this->app->make(UserRepositoryInterface::class)->create([
             'name' => 'Test',
             'email' => 'test@test.com',
-            'password' => '123456'
+            'password' => '123456',
         ]);
     }
 

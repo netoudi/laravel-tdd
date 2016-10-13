@@ -73,7 +73,7 @@ class UserTest extends AbstractTestCase
         $user = User::create(['name' => 'User Test', 'email' => 'user@email.com', 'password' => '123456']);
         $this->assertEquals('User Test', $user->name);
 
-        $user = User::all()->first();
+        $user = User::find(2);
         $this->assertEquals('User Test', $user->name);
     }
 
@@ -83,7 +83,7 @@ class UserTest extends AbstractTestCase
         $user->delete();
 
         $this->assertEquals(true, $user->trashed());
-        $this->assertCount(0, User::all());
+        $this->assertCount(1, User::all());
     }
 
     public function test_can_get_rows_deleted()
@@ -92,7 +92,7 @@ class UserTest extends AbstractTestCase
         $user->delete();
 
         $user = User::onlyTrashed()->get();
-        $this->assertEquals(1, $user[0]->id);
+        $this->assertEquals(2, $user[0]->id);
         $this->assertEquals('User Test', $user[0]->name);
     }
 
@@ -103,16 +103,16 @@ class UserTest extends AbstractTestCase
         $user->delete();
 
         $users = User::withTrashed()->get();
-        $this->assertCount(2, $users);
-        $this->assertEquals(1, $users[0]->id);
-        $this->assertEquals('User Test 1', $users[0]->name);
+        $this->assertCount(3, $users);
+        $this->assertEquals(2, $users[1]->id);
+        $this->assertEquals('User Test 1', $users[1]->name);
     }
 
     public function test_can_force_delete()
     {
         $user = User::create(['name' => 'User Test', 'email' => 'user@email.com', 'password' => '123456']);
         $user->forceDelete();
-        $this->assertCount(0, User::all());
+        $this->assertCount(1, User::all());
     }
 
     public function test_can_restore_rows_from_deleted()
@@ -121,8 +121,8 @@ class UserTest extends AbstractTestCase
         $user->delete();
         $user->restore();
 
-        $user = User::find(1);
-        $this->assertEquals(1, $user->id);
+        $user = User::find(2);
+        $this->assertEquals(2, $user->id);
         $this->assertEquals('User Test', $user->name);
     }
 
